@@ -6,6 +6,7 @@ const tripsController = require('../controllers/trips');
 const authController = require('../controllers/authentication');
 const roomsController = require('../controllers/rooms');
 const mealsController = require('../controllers/meals');
+const newsController = require('../controllers/news');
 
 // Enable JSON Web Tokens
 const jwt = require('jsonwebtoken');
@@ -95,5 +96,18 @@ router
     .route('/food/:mealCode')
     .get(mealsController.mealsFindByCode)
     .put(authenticateJWT, mealsController.mealsUpdateMeal);
+
+// Define route for out news endpoint
+router
+    .route('/news_api')
+    .get(newsController.newsList) // GET Method routes newsList
+    .post(authenticateJWT, newsController.newsAddNews); // POST Method Adds an Article
+
+// GET Method routes newsFindByCode - requires parameter
+// PUT Method routes newsUpdateNews - requires parameter
+router
+    .route('/news_api/:newsCode')
+    .get(newsController.newsFindByCode)
+    .put(authenticateJWT, newsController.newsUpdateNews);
 
 module.exports = router;

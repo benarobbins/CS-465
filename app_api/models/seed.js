@@ -1,15 +1,15 @@
 // Bring in the DB connection and the Trip schema
 const Mongoose = require('./db');
-const Meal = require('./meals');
+const News = require('./news');
 
 // Read see data from json file
 var fs = require('fs');
-var meals = JSON.parse(fs.readFileSync('./data/meals.json','utf8'));
+var news = JSON.parse(fs.readFileSync('./data/news.json','utf8'));
 
 // Delete any existing records, then insert seed data
 const seedDB = async () => {
-    await Meal.deleteMany({});
-    await Meal.insertMany(meals);
+    await News.deleteMany({});
+    await News.insertMany(news);
 };
 
 // Close the MongoDB connection and exit

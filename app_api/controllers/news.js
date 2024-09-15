@@ -1,25 +1,21 @@
 const mongoose = require('mongoose');
-const Meal = require('../models/meals'); // Register model
-const Model = mongoose.model('meals');
+const News = require('../models/news'); // Register model
+const Model = mongoose.model('news');
 
-// GET: /food - lists all the meals
+// GET: /news_api - lists all the news
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const mealsList = async(req, res) => {
+const newsList = async(req, res) => {
     const q = await Model
         .find({}) // No filter, return all records
         .exec();
 
-    // Uncomment the following line to show results
-    // of the query on the console
-    // console.log(q);
-
     if(!q)
     { // Database returned no data
         return res
                 .status(404)
                 .json(err);
-    } else { // Return resulting meal list
+    } else { // Return resulting new list
         return res
             .status(200)
             .json(q);
@@ -27,12 +23,12 @@ const mealsList = async(req, res) => {
 
 };
 
-// GET: /food/:mealCode - lists a single meal
+// GET: /news_api/:newCode - lists a single news
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const mealsFindByCode = async(req, res) => {
+const newsFindByCode = async(req, res) => {
     const q = await Model
-        .find({'code' : req.params.mealCode }) // Return a single record
+        .find({'code' : req.params.newsCode }) // Return a single record
         .exec();
 
     if(!q)
@@ -40,52 +36,54 @@ const mealsFindByCode = async(req, res) => {
         return res
                 .status(404)
                 .json(err);
-    } else { // Return resulting meal list
+    } else { // Return resulting new list
         return res
             .status(200)
             .json(q);
     }
 };
 
-// POST: /food - Add a new Meal
+// POST: /news_api - Add a new new
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const mealsAddMeal = async(req, res) => {
-    const newMeal = new Meal({
+const newsAddNews = async(req, res) => {
+    const newNews = new News({
         code: req.body.code,
-        group: req.body.gruop,
-        name: req.body.name,
+        title: req.body.title,
+        date: req.body.date,
+        author: req.body.author,
         image: req.body.image,
-        description: req.body.description
+        content: req.body.content
     });
 
-    const q = await newMeal.save();
+    const q = await newNews.save();
 
     if(!q)
     { // Database returned no data
         return res
                 .status(400)
                 .json(err);
-    } else { // Return new meal
+    } else { // Return new new
         return res
             .status(201)
             .json(q);
     }
 };
 
-// PUT: /food/:mealCode - Updates a Meal
+// PUT: /news_api/:newCode - Updates a new
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const mealsUpdateMeal = async(req, res) => {
+const newsUpdateNews = async(req, res) => {
     const q = await Model
         .findOneAndUpdate(
-            { 'code' : req.params.mealCode },
+            { 'code' : req.params.newsCode },
             {
                 code: req.body.code,
-                group: req.body.gruop,
-                name: req.body.name,
+                title: req.body.title,
+                date: req.body.date,
+                author: req.body.author,
                 image: req.body.image,
-                description: req.body.description
+                content: req.body.content
             }
         )
         .exec();
@@ -95,7 +93,7 @@ const mealsUpdateMeal = async(req, res) => {
             return res
                     .status(400)
                     .json(err);
-        } else { // Return updated meal
+        } else { // Return updated new
             return res
                 .status(201)
                 .json(q);
@@ -103,8 +101,8 @@ const mealsUpdateMeal = async(req, res) => {
 }
 
 module.exports = {
-    mealsList,
-    mealsFindByCode,
-    mealsAddMeal,
-    mealsUpdateMeal
+    newsList,
+    newsFindByCode,
+    newsAddNews,
+    newsUpdateNews
 };
