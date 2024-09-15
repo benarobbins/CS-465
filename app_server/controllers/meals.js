@@ -1,4 +1,4 @@
-const roomsEndpoint = 'http://localhost:3000/api/rooms_api';
+const mealsEndpoint = 'http://localhost:3000/api/food';
 const options = {
     method: 'GET',
     headers: {
@@ -6,9 +6,9 @@ const options = {
     }
 }
 
-/* GET Rooms view */
-const room = async function(req, res, next) {
-    await fetch(roomsEndpoint, options)
+/* GET Meals view */
+const meal = async function(req, res, next) {
+    await fetch(mealsEndpoint, options)
         .then(res => res.json())
         .then(json => {
             let message = null;
@@ -17,14 +17,14 @@ const room = async function(req, res, next) {
                 json = [];
             } else {
                 if(!json.length) {
-                    message = 'No rooms exist in our database!';
+                    message = 'No meals exist in our database!';
                 }
             }
-            res.render('rooms', {title: 'Travlr Getaways', rooms: json, message});
+            res.render('meals', {title: 'Travlr Getaways', meals: json, message});
         })
         .catch(err => res.status(500).send(err.message));
 };
 
 module.exports = {
-    room
+    meal
 }

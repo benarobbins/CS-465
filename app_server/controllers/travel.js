@@ -6,16 +6,11 @@ const options = {
     }
 }
 
-// var fs = require('fs');
-// var trips = JSON.parse(fs.readFileSync('./data/trips.json','utf8'));
-
 /* GET Travel view */
 const travel = async function(req, res, next) {
-    // console.log('TRAVEL CONTROLLER BEGIN');
     await fetch(tripsEndpoint, options)
         .then(res => res.json())
         .then(json => {
-            // console.log(json);
             let message = null;
             if(!(json instanceof Array)) {
                 message = 'API lookup error';
@@ -27,8 +22,7 @@ const travel = async function(req, res, next) {
             }
             res.render('travel', {title: 'Travlr Getaways', trips: json, message});
         })
-        .catch(err => res.status(500).send(e.message));
-    // console.log('TRAVEL CONTROLLER AFTER RENDER');
+        .catch(err => res.status(500).send(err.message));
 };
 
 module.exports = {
