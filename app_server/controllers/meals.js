@@ -20,7 +20,12 @@ const meal = async function(req, res, next) {
                     message = 'No meals exist in our database!';
                 }
             }
-            res.render('meals', {title: 'Travlr Getaways', meals: json, message});
+            res.render('meals', {
+                title: "Travlr Getaways",
+                meals: json,
+                message,
+                active_nav: {meals: true}
+            });
         })
         .catch(err => res.status(500).send(err.message));
 };

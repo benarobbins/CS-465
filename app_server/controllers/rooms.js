@@ -20,7 +20,12 @@ const room = async function(req, res, next) {
                     message = 'No rooms exist in our database!';
                 }
             }
-            res.render('rooms', {title: 'Travlr Getaways', rooms: json, message});
+            res.render('rooms', {
+                title: "Travlr Getaways",
+                rooms: json,
+                message,
+                active_nav: {rooms: true}
+            });
         })
         .catch(err => res.status(500).send(err.message));
 };
