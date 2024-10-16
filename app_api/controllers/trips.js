@@ -10,10 +10,6 @@ const tripsList = async(req, res) => {
         .find({}) // No filter, return all records
         .exec();
 
-    // Uncomment the following line to show results
-    // of the query on the console
-    // console.log(q);
-
     if(!q)
     { // Database returned no data
         return res
@@ -24,7 +20,6 @@ const tripsList = async(req, res) => {
             .status(200)
             .json(q);
     }
-
 };
 
 // GET: /trips/:tripCode - lists a single trips
@@ -35,10 +30,6 @@ const tripsFindByCode = async(req, res) => {
         .find({'code' : req.params.tripCode }) // Return a single record
         .exec();
 
-    // Uncomment the following line to show results
-    // of the query on the console
-    // console.log(q);
-
     if(!q)
     { // Database returned no data
         return res
@@ -49,7 +40,6 @@ const tripsFindByCode = async(req, res) => {
             .status(200)
             .json(q);
     }
-
 };
 
 // POST: /trips - Add a new Trip
@@ -79,20 +69,12 @@ const tripsAddTrip = async(req, res) => {
             .status(201)
             .json(q);
     }
-
-    // Uncomment the following line to show results of operation
-    // on the console
-    // console.log(q);
 };
 
 // PUT: /trips/:tripCode - Updates a Trip
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
 const tripsUpdateTrip = async(req, res) => {
-    // Uncomment for debugging
-    // console.log(req.params);
-    // console.log(req.body);
-
     const q = await Model
         .findOneAndUpdate(
             { 'code' : req.params.tripCode },
@@ -119,10 +101,6 @@ const tripsUpdateTrip = async(req, res) => {
                 .status(201)
                 .json(q);
         }
-
-        // Uncomment the following line to show results of operation
-        // on the console
-        // console.log(q);
 }
 
 module.exports = {

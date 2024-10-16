@@ -10,10 +10,6 @@ const roomsList = async(req, res) => {
         .find({}) // No filter, return all records
         .exec();
 
-    // Uncomment the following line to show results
-    // of the query on the console
-    // console.log(q);
-
     if(!q)
     { // Database returned no data
         return res
@@ -24,7 +20,6 @@ const roomsList = async(req, res) => {
             .status(200)
             .json(q);
     }
-
 };
 
 // GET: /rooms/:roomCode - lists a single rooms

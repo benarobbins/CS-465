@@ -1,7 +1,7 @@
-const express = require('express'); // Express app
-const router = express.Router(); // Router logic
+const express = require('express');
+const router = express.Router();
 
-// This is where we import the controllers we will route
+// Import the controllers for routing.
 const tripsController = require('../controllers/trips');
 const authController = require('../controllers/authentication');
 const roomsController = require('../controllers/rooms');
@@ -13,10 +13,8 @@ const jwt = require('jsonwebtoken');
 
 // Method to authenticate our JWT
 function authenticateJWT(req, res, next) {
-    // console.log('In Middleware');
 
     const authHeader = req.headers['authorization'];
-    // console.log('Auth Header: ' + authHeader);
 
     if(authHeader == null) {
         console.log('Auth Header Required but NOT PRESENT!');
@@ -30,25 +28,22 @@ function authenticateJWT(req, res, next) {
     }
 
     const token = authHeader.split(' ')[1];
-    // console.log('Token: ' + token);
 
     if(token == null) {
         console.log('Null Bearer Token');
         return res.sendStatus(401);
     }
 
-    // console.log(process.env.JWT_SECRET);
-    // console.log(jwt.decode(token));
     const verified = jwt.verify(token, process.env.JWT_SECRET, (err, verified) => {
         if(err) {
             return res.sendStatus(401).json('Token Validation Error!');
         }
-        req.auth = verified; // Set the auth paramto the decoded object
+        req.auth = verified; // Set the auth param to the decoded object
     });
-    next(); // We need to continue or this will hang forever
+    next();
 }
 
-// Define route for authentication endpoint
+// Define route for register endpoint
 router
     .route('/register')
     .post(authController.register);
@@ -58,7 +53,7 @@ router
     .route('/login')
     .post(authController.login);
 
-// Define route for out trips endpoint
+// Define route for trips endpoint
 router
     .route('/trips')
     .get(tripsController.tripsList) // GET Method routes tripList
@@ -71,7 +66,7 @@ router
     .get(tripsController.tripsFindByCode)
     .put(authenticateJWT, tripsController.tripsUpdateTrip);
 
-// Define route for out rooms endpoint
+// Define route for rooms endpoint
 router
     .route('/rooms_api')
     .get(roomsController.roomsList) // GET Method routes roomList
@@ -84,7 +79,7 @@ router
     .get(roomsController.roomsFindByCode)
     .put(authenticateJWT, roomsController.roomsUpdateRoom);
 
-// Define route for out meals endpoint
+// Define route for meals endpoint
 router
     .route('/food')
     .get(mealsController.mealsList) // GET Method routes mealList
@@ -97,7 +92,7 @@ router
     .get(mealsController.mealsFindByCode)
     .put(authenticateJWT, mealsController.mealsUpdateMeal);
 
-// Define route for out news endpoint
+// Define route for news endpoint
 router
     .route('/news_api')
     .get(newsController.newsList) // GET Method routes newsList

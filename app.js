@@ -59,6 +59,7 @@ app.use((err, req, res, next) => {
   }
 });
 
+// Define pages with routers.
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);

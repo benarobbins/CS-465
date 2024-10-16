@@ -69,4 +69,5 @@ require('./travlr');
 require('./user');
 require('./rooms');
 require('./meals');
+require('./news');
 module.exports = mongoose;

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Define the trip schema
 const newsSchema = new mongoose.Schema({
+    // Code is indexed value. Used in GET requests to return single news item.
     code: { type: String, required: true, index: true },
     title: { type: String, required: true, index: true },
     date: { type: Date, required: true },
